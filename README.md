@@ -38,3 +38,11 @@ The system is engineered for maximum performance and stability on resource-const
 
    ```bash
    pip install -r requirements.txt
+🚀 Usage1. Ingest Data (Build the Vector Store)This step processes your PDFs and builds the FAISS vector index. Crucially, the embedding model is configured here to run on the CPU to conserve GPU memory.Bashpython ingest.py
+
+(This creates the vectorstore/db_faiss directory.)2. Launch the ApplicationThis launches the Gradio web interface, loads the Phi-2 LLM onto the GPU, and activates the RAG chain.Bashpython app.py
+
+Running on local URL: http://127.0.0.1:7860
+Running on public URL: https://55f022b70d98a51551.gradio.live/
+ 
+A public Gradio URL will be printed to the console, allowing the application to be accessed via a web browser.⚠️ Important Note on Memory OptimizationThis project successfully runs within the 15GB VRAM limit of a T4 GPU due to two specific optimizations:Embedding Offload: The get_embeddings function in ingest.py explicitly forces the BGE-M3 model to run on the CPU (model_kwargs={'device': device}). This frees up several GB of VRAM for the LLM.Efficient LLM: We use the highly optimized microsoft/phi-2 model with 4-bit quantization (load_in_4bit=True) for the final generation step.Troubleshooting CUDA OOM Errors:If you encounter a CUDA out of memory error during initialization or inference, it is typically due to residual memory usage from background processes in the cloud environment. The solution is to perform a full session restart:Go to Runtime $\rightarrow$ Restart session (in Colab).Run all cells again from the top.
