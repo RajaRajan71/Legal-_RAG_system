@@ -1,4 +1,4 @@
-# 🇮🇳 Optimized Legal RAG System (Phi-2)
+#  Optimized Legal RAG System (Phi-2)
 
 This project implements a highly efficient Retrieval-Augmented Generation (RAG) system designed to answer complex legal queries based on external document context (specifically, Indian law documents like the Contract Act and Company Law).
 
